@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
   aroma: { type: String },
   quantity: { type: Number },
   image: { type: String },
+  weightKg: { type: Number },
 });
 
 const Product = mongoose.model("Product", productSchema);
