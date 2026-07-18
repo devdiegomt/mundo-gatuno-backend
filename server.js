@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import productRoutes from "./routes/products.js";
+import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 4000;
 // Orígenes permitidos, separados por coma en la env var ALLOWED_ORIGINS.
 // Si no está definida, se permite cualquier origen (útil en desarrollo).
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",").map((origin) =>
-  origin.trim()
+  origin.trim().replace(/\/+$/, "")
 );
 
 app.use(
@@ -35,6 +36,7 @@ app.get("/", (req, res) => {
   res.json({ status: "ok", service: "mundo-gatuno-backend" });
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 
 if (!process.env.MONGO_URI) {
